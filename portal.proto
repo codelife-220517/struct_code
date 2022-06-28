@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package pepsi.portal.pb;
+
+
+message NoticeBoardInfo {
+  int32 ID = 1;
+  int32 Type = 2; // 显示类型0/1/2（显示一次/每日显示/每次显示）
+  string Title = 3;
+  string Content = 4;
+}
+
+// @cmd 1103
+message NoticeBoardReq {
+  string ChannelID = 1;  // 渠道id
+  string DeviceID = 2;   // 设备id,出错的话需要打印出来
+  string DeviceType = 3; // 设备类型
+}
+
+// @cmd 1104
+message NoticeBoardRsp {
+  repeated NoticeBoardInfo NoticeBoardInfoArray = 1;
+}
+
+// @cmd 1105
+message AuthReq {
+  string AppUUID = 1;   // 客户端唯一ID
+  string ChannelID = 2; // 渠道ID
+  string DeviceID = 3;  // 设备ID
+  string AccountID = 4; // 账号ID·
+  string AuthInfo = 5;  // xgsdk回馈的认证字符串
+  string Pwd = 6; // 测试账号密码(非必须，开启测试证号密码验证时才需要)
+}
+
+// @cmd 1106
+message AuthRsp {
+  int32 Code = 1; // 建议client将注释部分作为错误描述信息，msg作为详细描述
+  string Msg = 2;             // code不为0时的错误描述
+  string AppUUID = 3;         // 客户端唯一ID
+  string AccountID = 4;       // 账号ID
+  string AccountName = 5;     // 渠道用户名，非必须字段
+  uint64 Token = 6;           // 连接Login凭证
+  int64 TokenExpiredTime = 7; // token过期时间
+  bool OneArea = 8;           // 是否为全球同服
+  string TokenStr = 9; // 连接Login凭证(string类型，跟Token一样，二选一)
+  string LoginHost = 10; // 连接Login地址
+}
